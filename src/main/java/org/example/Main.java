@@ -9,6 +9,12 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         DatingPartner partner = null;
 
+        // 타이머 테스트 코드
+        System.out.println("=== 1단계: 타이머 스레드 단독 테스트 시작 ===");
+        TimerRunnable timerRunnable = new TimerRunnable();
+        Thread timerThread = new Thread(timerRunnable);
+        timerThread.start();
+
         System.out.println("======================================================");
         System.out.println("  ☕ 눈치코치 소개팅 시뮬레이션 ☕");
         System.out.println("======================================================");

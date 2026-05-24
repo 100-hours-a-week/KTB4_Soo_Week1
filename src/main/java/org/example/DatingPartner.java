@@ -11,7 +11,8 @@ public class DatingPartner {
         this.player = player;
     }
 
-    public void changeHeartRate(int amount) {
+    // 공유자원 - 여러 스레드가 동시에 점수를 고칠 때 데이터가 깨지는 것을 막음
+    public synchronized void changeHeartRate(int amount) {
         this.heartRate += amount;
     }
 
@@ -19,7 +20,8 @@ public class DatingPartner {
         return name;
     }
 
-    public int getHeartRate() {
+    // synchronized를 붙여 호감도를 안전하게 조회
+    public synchronized int getHeartRate() {
         return heartRate;
     }
 

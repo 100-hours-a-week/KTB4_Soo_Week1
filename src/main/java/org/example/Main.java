@@ -9,11 +9,11 @@ public class Main {
         Scanner scanner = new Scanner(System.in);
         DatingPartner partner = null;
 
-        // 타이머 테스트 코드
-        System.out.println("=== 1단계: 타이머 스레드 단독 테스트 시작 ===");
-        TimerRunnable timerRunnable = new TimerRunnable();
-        Thread timerThread = new Thread(timerRunnable);
-        timerThread.start();
+//        // 타이머 테스트 코드가
+//        System.out.println("=== 1단계: 타이머 스레드 단독 테스트 시작 ===");
+//        TimerRunnable timerRunnable = new TimerRunnable();
+//        Thread timerThread = new Thread(timerRunnable);
+//        timerThread.start();
 
         System.out.println("======================================================");
         System.out.println("  ☕ 눈치코치 소개팅 시뮬레이션 ☕");
@@ -54,6 +54,17 @@ public class Main {
         }
 
         partner.introduce();
+
+        // 비동기 테스트 코드
+        System.out.println("\n=== [멀티스레드 합동 테스트] 타이머와 스탯 스레드를 가동합니다 ===");
+
+        // 타이머 스레드 가동
+        Thread timerThread = new Thread(new TimerRunnable());
+        timerThread.start();
+
+        // 스탯 변동 스레드
+        Thread statThread = new Thread(new StartBurnRunnable(partner));
+        statThread.start();
 
         // 1단계 대화: 첫인사
         System.out.println("\n💬 [1단계: 첫인사 나누기]");

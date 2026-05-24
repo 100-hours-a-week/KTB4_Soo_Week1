@@ -16,7 +16,7 @@ public class StartBurnRunnable implements Runnable{
                 partner.changeHeartRate(-3);
 
                 System.out.println("\n🚨 [실시간 패널티] 침묵이 길어져 "
-                        + partner.getName() + " 님의 호감도가 5 감소했습니다! (현재 호감도: "
+                        + partner.getName() + " 님의 호감도가 3 감소했습니다! (현재 호감도: "
                         + partner.getHeartRate() + "점)");
                 System.out.print("당신의 선택은? : ");
             }

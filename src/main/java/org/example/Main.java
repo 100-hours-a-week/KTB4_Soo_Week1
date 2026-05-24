@@ -55,23 +55,34 @@ public class Main {
 
         partner.introduce();
 
-        // 비동기 테스트 코드
-        System.out.println("\n=== [멀티스레드 합동 테스트] 타이머와 스탯 스레드를 가동합니다 ===");
-
-        // 타이머 스레드 가동
-        Thread timerThread = new Thread(new TimerRunnable());
-        timerThread.start();
-
-        // 스탯 변동 스레드
-        Thread statThread = new Thread(new StartBurnRunnable(partner));
-        statThread.start();
+//        // 비동기 테스트 코드
+//        System.out.println("\n=== [멀티스레드 합동 테스트] 타이머와 스탯 스레드를 가동합니다 ===");
+//
+//        // 타이머 스레드 가동
+//        Thread timerThread = new Thread(new TimerRunnable());
+//        timerThread.start();
+//
+//        // 스탯 변동 스레드
+//        Thread statThread = new Thread(new StartBurnRunnable(partner));
+//        statThread.start();
 
         // 1단계 대화: 첫인사
         System.out.println("\n💬 [1단계: 첫인사 나누기]");
         System.out.println("1. 무난하게 대화 열기: \"오시는데 힘들진 않으셨어요?\"");
         System.out.println("2. 무리수 개그 던지기: \"혹시 MBTI가 C.U.T.E 이신가요? ㅎㅎ\"");
         System.out.print("당신의 선택은? (1~2) : ");
-        partner.respondStep1(scanner.nextInt());
+
+        Thread timerThread1 = new Thread(new TimerRunnable());
+        Thread statThead1 = new Thread(new StartBurnRunnable(partner));
+        timerThread1.start();
+        statThead1.start();
+
+        int choice1 = scanner.nextInt();
+
+        timerThread1.interrupt();
+        statThead1.interrupt();
+
+        partner.respondStep1(choice1);
         System.out.println("[현재 호감도: " + partner.getHeartRate() + "점]");
 
         // 2단계 대화: 깊은 대화
@@ -79,7 +90,18 @@ public class Main {
         System.out.println("1. 질문 공세: \"주말에는 보통 뭐 하세요?\"");
         System.out.println("2. 준비성 어필: 가방에서 슬쩍 고양이 키링 선물을 건넨다.");
         System.out.print("당신의 선택은? (1~2) : ");
-        partner.respondStep2(scanner.nextInt());
+
+        Thread timerThread2 = new Thread(new TimerRunnable());
+        Thread statThead2 = new Thread(new StartBurnRunnable(partner));
+        timerThread2.start();
+        statThead2.start();
+
+        int choice2 = scanner.nextInt();
+
+        timerThread2.interrupt();
+        statThead2.interrupt();
+
+        partner.respondStep2(choice2);
         System.out.println("[현재 호감도: " + partner.getHeartRate() + "점]");
 
         // 3단계 대화: 승부수
@@ -87,7 +109,18 @@ public class Main {
         System.out.println("1. 돌직구 고백: \"마음에 드는데 우리 조만간 또 만날까요?\"");
         System.out.println("2. 스킨십 시도: 슬쩍 " + partner.getName() + " 님의 손을 터치한다.");
         System.out.print("당신의 선택은? (1~2) : ");
-        partner.respondStep3(scanner.nextInt());
+
+        Thread timerThread3 = new Thread(new TimerRunnable());
+        Thread statThead3 = new Thread(new StartBurnRunnable(partner));
+        timerThread3.start();
+        statThead3.start();
+
+        int choice3 = scanner.nextInt();
+
+        timerThread2.interrupt();
+        statThead2.interrupt();
+
+        partner.respondStep3(choice3);
 
         // 최종 엔딩
         System.out.println("\n======================================================");

@@ -23,7 +23,7 @@ public class ScenarioController {
         System.out.println();
 
         OutputView.printSelectionMenu();
-        int characterChoice = InputView.readInt();
+        int characterChoice = InputView.readIntWithRange(1, 4);
 
         // 팩토리 패턴을 통해 메인 흐름에서 객체 생성 책임을 분리
         DatingPartner partner = PartnerFactory.createPartner(characterChoice, player);
@@ -46,7 +46,7 @@ public class ScenarioController {
             timerTask = executorService.submit(new TimerRunnable(mainThread));
             statTask = executorService.submit(new StartBurnRunnable(partner));
 
-            int choice1 = InputView.readInt();
+            int choice1 = InputView.readIntWithRange(1, 2);
 
             // 유저가 입력 완료했으므로 현재 진행 중인 태스크만 즉시 취소
             if (timerTask != null){
@@ -69,7 +69,7 @@ public class ScenarioController {
             timerTask = executorService.submit(new TimerRunnable(mainThread));
             statTask = executorService.submit(new StartBurnRunnable(partner));
 
-            int choice2 = InputView.readInt();
+            int choice2 = InputView.readIntWithRange(1, 2);
 
             if (timerTask != null){
                 timerTask.cancel(true);
@@ -89,7 +89,7 @@ public class ScenarioController {
             timerTask = executorService.submit(new TimerRunnable(mainThread));
             statTask = executorService.submit(new StartBurnRunnable(partner));
 
-            int choice3 = InputView.readInt();
+            int choice3 = InputView.readIntWithRange(1, 2);
 
             if (timerTask != null){
                 timerTask.cancel(true);

@@ -2,6 +2,9 @@ package org.example;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
 
 //TIP To <b>Run</b> code, press <shortcut actionId="Run"/> or
 // click the <icon src="AllIcons.Actions.Execute"/> icon in the gutter.
@@ -52,6 +55,12 @@ public class Main {
 
         Thread mainThread = Thread.currentThread();
 
+        // 두 개의 스레드만 다루는 스레드풀 생성
+        ExecutorService executorService = Executors.newFixedThreadPool(2);
+
+        Future<?> timerTask = null;
+        Future<?> statTask = null;
+
         try{
             // 1단계 대화: 첫인사
             System.out.println("\n💬 [1단계: 첫인사 나누기]");
@@ -59,15 +68,19 @@ public class Main {
             System.out.println("2. 무리수 개그 던지기: \"혹시 MBTI가 C.U.T.E 이신가요? ㅎㅎ\"");
             System.out.print("당신의 선택은? (1~2) : ");
 
-            Thread timerThread1 = new Thread(new TimerRunnable(mainThread));
-            Thread statThead1 = new Thread(new StartBurnRunnable(partner));
-            timerThread1.start();
-            statThead1.start();
+            // submit()의 결과로 Future를 리턴받아 저장
+            timerTask = executorService.submit(new TimerRunnable(mainThread));
+            statTask = executorService.submit(new StartBurnRunnable(partner));
 
             int choice1 = scanner.nextInt();
 
-            timerThread1.interrupt();
-            statThead1.interrupt();
+            if(timerTask != null){
+                timerTask.cancel(true);
+            }
+
+            if(statTask != null){
+                statTask.cancel(true);
+            }
 
             partner.respondStep1(choice1);
             System.out.println("[현재 호감도: " + partner.getHeartRate() + "점]");
@@ -78,15 +91,18 @@ public class Main {
             System.out.println("2. 준비성 어필: 가방에서 슬쩍 고양이 키링 선물을 건넨다.");
             System.out.print("당신의 선택은? (1~2) : ");
 
-            Thread timerThread2 = new Thread(new TimerRunnable(mainThread));
-            Thread statThead2 = new Thread(new StartBurnRunnable(partner));
-            timerThread2.start();
-            statThead2.start();
+            timerTask = executorService.submit(new TimerRunnable(mainThread));
+            statTask = executorService.submit(new StartBurnRunnable(partner));
 
             int choice2 = scanner.nextInt();
 
-            timerThread2.interrupt();
-            statThead2.interrupt();
+            if(timerTask != null){
+                timerTask.cancel(true);
+            }
+
+            if(statTask != null){
+                statTask.cancel(true);
+            }
 
             partner.respondStep2(choice2);
             System.out.println("[현재 호감도: " + partner.getHeartRate() + "점]");
@@ -97,21 +113,35 @@ public class Main {
             System.out.println("2. 스킨십 시도: 슬쩍 " + partner.getName() + " 님의 손을 터치한다.");
             System.out.print("당신의 선택은? (1~2) : ");
 
-            Thread timerThread3 = new Thread(new TimerRunnable(mainThread));
-            Thread statThead3 = new Thread(new StartBurnRunnable(partner));
-            timerThread3.start();
-            statThead3.start();
+
+            timerTask = executorService.submit(new TimerRunnable(mainThread));
+            statTask = executorService.submit(new StartBurnRunnable(partner));
 
             int choice3 = scanner.nextInt();
 
-            timerThread3.interrupt();
-            statThead3.interrupt();
+            if(timerTask != null){
+                timerTask.cancel(true);
+            }
+
+            if(statTask != null){
+                statTask.cancel(true);
+            }
 
             partner.respondStep3(choice3);
 
         }catch (NoSuchElementException | IllegalStateException e){
             System.out.println("\n [타임아웃 사태] 당신은 너무 오래 침묵했습니다...");
             System.out.println(partner.getName() + " 님이 실망 가득한 표정으로 시계를 바라봅니다.");
+
+            if(timerTask != null){
+                timerTask.cancel(true);
+            }
+
+            if(statTask != null){
+                statTask.cancel(true);
+            }
+        }finally {
+            executorService.shutdown();
         }
 
 

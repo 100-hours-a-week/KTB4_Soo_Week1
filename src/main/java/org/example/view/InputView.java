@@ -1,0 +1,9 @@
+package org.example.view;
+
+import java.util.Scanner;
+
+public class InputView {
+    private static final Scanner scanner = new Scanner(System.in);
+    public static String readLine() { return scanner.next(); }
+    public static int readInt() { return scanner.nextInt(); }
+}

@@ -1,4 +1,6 @@
-package org.example;
+package org.example.runnable;
+
+import org.example.domain.DatingPartner;
 
 public class StartBurnRunnable implements Runnable{
     private final DatingPartner partner;

@@ -1,4 +1,4 @@
-package org.example;
+package org.example.runnable;
 
 public class TimerRunnable implements Runnable{
     private final Thread mainTread;

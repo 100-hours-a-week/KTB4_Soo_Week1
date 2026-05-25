@@ -1,6 +1,6 @@
-package org.example;
+package org.example.domain;
 
-public class DatingPartner {
+public abstract class DatingPartner {
     private String name;
     private int heartRate;  // 호감도
     private Player player;
@@ -33,9 +33,9 @@ public class DatingPartner {
         System.out.println(name + ": 안녕하세요! 처음 뵙겠습니다. ㅎㅎ");
     }
 
-    public void respondStep1(int choice) {}
-    public void respondStep2(int choice) {}
-    public void respondStep3(int choice) {}
+    public abstract String respondStep1(int choice);
+    public abstract String respondStep2(int choice);
+    public abstract String respondStep3(int choice);
 }
 
 

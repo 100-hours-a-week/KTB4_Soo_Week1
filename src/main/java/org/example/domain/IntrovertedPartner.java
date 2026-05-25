@@ -1,7 +1,7 @@
 package org.example.domain;
 
 public class IntrovertedPartner extends DatingPartner {
-    public int energyLevel; // 기력
+    private int energyLevel; // 기력
 
     public IntrovertedPartner(String name, Player player) {
         super(name, player);
